@@ -26,9 +26,9 @@ app.post("/welcome_canv", async (req: Request, res: Response) => {
 
     await page.goto(filePath);
 
-    await page.evaluate((data) => {
+    const result = await page.evaluate((data) => {
       const pfpImg = document.querySelector('.welcome-pfp') as HTMLImageElement;
-      const usernameHeader = document.querySelector('.welcome-header') as HTMLHeadingElement;
+      const usernameHeader = document.querySelector('.wlcome-header') as HTMLHeadingElement;
     
       if (pfpImg && usernameHeader) {
         pfpImg.src = data.pfp_url;
@@ -39,11 +39,10 @@ app.post("/welcome_canv", async (req: Request, res: Response) => {
           pfpImg.onerror = (error) => resolve(error.toString());
         });
       } else {
-        res.status(500).send('pfpImg or usernameHeader not found');
         throw new Error('pfpImg or usernameHeader not found');
       }
     }, jsonData);
-
+  
     const rootElement = await page.waitForSelector('#root');
 
     const screenshotBuffer = await rootElement?.screenshot();
@@ -57,9 +56,14 @@ app.post("/welcome_canv", async (req: Request, res: Response) => {
     await page.screenshot({ path: 'screenshot.png' });
     
   } catch (error) {
-    console.log(error);
-    console.log(typeof error);
-    res.send(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+      res.status(500).send(error.message);
+    } else {
+      console.error("an unknown error occurred", error);
+      res.status(500).send("an unknown error occurred");
+    }
+    
   } 
 })
 
