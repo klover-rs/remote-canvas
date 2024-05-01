@@ -1,0 +1,32 @@
+#root {
+    background-color: brown;
+    width: 800px;
+    height: 300px;
+    display: flex;
+}
+
+.welcome-pfp-container {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-pfp {
+    width: 200px;
+    height: 200px;
+    border-radius: 5%;
+    border: 3px solid white;
+}
+
+.welcome-header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-header {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
