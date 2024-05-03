@@ -52,8 +52,6 @@ app.post("/welcome_canv", async (req: Request, res: Response) => {
     } else {
       res.status(500).send('Screenshot buffer is undefined');
     }
-
-    await page.screenshot({ path: 'screenshot.png' });
     
   } catch (error) {
     if (error instanceof Error) {
